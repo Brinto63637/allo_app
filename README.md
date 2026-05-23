@@ -70,3 +70,33 @@ Reservation statuses:
 - `pending`
 - `confirmed`
 - `released`
+
+## API Endpoints
+
+List products with warehouse inventory and available stock:
+
+```http
+GET /api/products
+```
+
+List warehouses with product inventory and available stock:
+
+```http
+GET /api/warehouses
+```
+
+Create a pending reservation:
+
+```http
+POST /api/reservations
+Content-Type: application/json
+
+{
+  "productId": "product_id",
+  "warehouseId": "warehouse_id",
+  "quantity": 1,
+  "expiresAt": "2026-05-23T12:30:00.000Z"
+}
+```
+
+If available stock is insufficient, the endpoint returns `409 Conflict`.
