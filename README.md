@@ -100,3 +100,26 @@ Content-Type: application/json
 ```
 
 If available stock is insufficient, the endpoint returns `409 Conflict`.
+
+Confirm a pending reservation:
+
+```http
+POST /api/reservations/:id/confirm
+```
+
+If the reservation has expired, the endpoint releases it and returns `410 Gone`.
+
+Release a pending reservation:
+
+```http
+POST /api/reservations/:id/release
+```
+
+Release expired pending reservations from a scheduled job:
+
+```http
+POST /api/jobs/reservations/release-expired
+Authorization: Bearer <CRON_SECRET>
+```
+
+Configure a production scheduler such as Vercel Cron, Supabase Scheduler, GitHub Actions, or another trusted worker to call this endpoint regularly.
