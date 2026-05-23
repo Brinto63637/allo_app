@@ -123,3 +123,21 @@ Authorization: Bearer <CRON_SECRET>
 ```
 
 Configure a production scheduler such as Vercel Cron, Supabase Scheduler, GitHub Actions, or another trusted worker to call this endpoint regularly.
+
+## Frontend
+
+Product listing and checkout are available at:
+
+```http
+GET /
+```
+
+The page uses a Server Component to load products and warehouse stock, then a client checkout component handles:
+
+- reserve one unit
+- live reservation countdown
+- confirm purchase
+- cancel reservation
+- automatic UI refresh after reservation actions
+- `409 Conflict` insufficient stock messages
+- `410 Gone` expired reservation messages
