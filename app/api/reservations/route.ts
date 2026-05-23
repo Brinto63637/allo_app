@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { ApiError, handleApiError } from "@/lib/api/errors";
 import { createReservation } from "@/lib/services/reservation-service";
