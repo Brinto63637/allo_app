@@ -1,4 +1,6 @@
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { ApiError, handleApiError } from "@/lib/api/errors";
 import { releaseExpiredReservations } from "@/lib/services/reservation-service";
