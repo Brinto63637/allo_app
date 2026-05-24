@@ -1,6 +1,6 @@
 import { Prisma, ReservationStatus } from "@prisma/client";
 import { ApiError } from "@/lib/api/errors";
-import { prisma } from "@/lib/prisma";
+import { getPrismaClient } from "@/lib/prisma";
 import type { CreateReservationInput } from "@/lib/validations/reservation";
 
 type LockedInventoryRow = {
@@ -19,6 +19,8 @@ type LockedReservationRow = {
 };
 
 export async function createReservation(input: CreateReservationInput) {
+  const prisma = getPrismaClient();
+
   return prisma.$transaction(
     async (tx) => {
       const [inventory] = await tx.$queryRaw<LockedInventoryRow[]>`
@@ -101,6 +103,8 @@ export async function createReservation(input: CreateReservationInput) {
 }
 
 export async function confirmReservation(reservationId: string) {
+  const prisma = getPrismaClient();
+
   const result = await prisma.$transaction(
     async (tx) => {
       const reservation = await lockReservation(tx, reservationId);
@@ -187,6 +191,8 @@ export async function confirmReservation(reservationId: string) {
 }
 
 export async function releaseReservation(reservationId: string) {
+  const prisma = getPrismaClient();
+
   return prisma.$transaction(
     async (tx) => {
       const reservation = await lockReservation(tx, reservationId);
@@ -227,6 +233,8 @@ export async function releaseReservation(reservationId: string) {
 }
 
 export async function releaseExpiredReservations(limit = 100) {
+  const prisma = getPrismaClient();
+
   return prisma.$transaction(
     async (tx) => {
       const expiredReservations = await tx.$queryRaw<LockedReservationRow[]>`

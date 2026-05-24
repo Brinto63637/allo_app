@@ -1,6 +1,8 @@
-import { prisma } from "@/lib/prisma";
+import { getPrismaClient } from "@/lib/prisma";
 
 export async function listProducts() {
+  const prisma = getPrismaClient();
+
   const products = await prisma.product.findMany({
     orderBy: { name: "asc" },
     include: {
